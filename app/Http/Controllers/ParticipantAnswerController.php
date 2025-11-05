@@ -55,6 +55,39 @@ public function create()
         $participant_answers = ParticipantAnswer::where('poll_id', $poll->id)->get();
         $participant_ids = $participant_answers->pluck('participant_id')->toArray();
 
+         // ✅ Check if this agent already has an assigned participant not completed
+        $existingUser = MalavaParticipant::where('called_by', auth()->id())
+            ->where('call_status', 1) // 1 = assigned but not yet updated
+            ->first();
+
+        if ($existingUser) {
+            $user = $existingUser;
+
+            $poll = Poll::find(3);
+            $poll_questions = PollQuestion::where('poll_id', $poll->id)->get();
+            $question_ids = $poll_questions->pluck('id')->toArray();
+            $poll_answers = PollAnswer::where('poll_id', $poll->id)
+                                ->whereIn('poll_question_id', $question_ids)
+                                ->get();
+            $participant_answers = ParticipantAnswer::where('poll_id', $poll->id)->get();
+            $participant_ids = $participant_answers->pluck('participant_id')->toArray();
+
+            $agents = User::whereIn('role_id', [6, 1])->get();
+            $counties = Counties::where('id', 37)->get();
+            $pollingStations = PollingStation::all();
+
+            // ✅ Return the same participant, don't fetch new!
+            return view('pages.polls.participant_answer.create', compact(
+                'poll',
+                'agents',
+                'pollingStations',
+                'counties',
+                'poll_questions',
+                'poll_answers',
+                'user',
+                'participant_answers'
+            ));
+        }
 
          
         DB::beginTransaction();
