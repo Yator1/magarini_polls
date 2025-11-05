@@ -186,8 +186,8 @@
                             @foreach($poll->questions as $poll_question)
                             <th>{{$poll_question->question}}</th>
                             @endforeach
-                            {{-- <th>Follow Up Date</th>
-                            <th>Comments</th> --}}
+                            {{-- <th>Follow Up Date</th>--}}
+                            <th>Comments</th> 
                             <th>Agent</th>
                             <th>Update</th>
                         </tr>
@@ -321,17 +321,17 @@
                                             </div>
                                             @endif --}}
                                         {{-- </td> --}}
-                                        {{-- <td>
-                                            {{$comment ?? 'No Comment'}} --}}
-                                            {{-- @if($comment)
-                                            {{$comment}}
-                                            @else
+                                        <td>
+                                            {{$comment ?? 'No Comment'}}
+                                         {{-- @if($comment)
+                                            {{$comment}} --}}
+                                        {{-- @else
                                             <div class="mb-3">
                                                 <label for="exampleInputdate" class="form-label">Follow Up Date</label>
                                                 <input style="z-index: 1001;" type="date" name="followUpDate"  class="form-control" id="exampleInputdate">
                                                 
                                             </div>
-                                            @endif --}}
+                                            @endif  --}}
                                         {{-- </td> --}}
                                         <td>
                                             {{$user->CalledBy->first_name ?? 'Test Poll' }}

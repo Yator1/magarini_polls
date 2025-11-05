@@ -34,42 +34,14 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span>@lang('translation.menu')</span></li>
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('mobilizers.dashboard') }}" aria-controls="sidebarDashboards">
                         <i class="mdi mdi-speedometer"></i> <span>Mobilizers Dashboard</span>
                     </a>
-                </li>
+                </li> --}}
 
                 {{-- @canany(['canViewMobilizers', 'canManageMobilizers', 'isMobilizer']) --}}
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#mobilizersNav" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="mobilizersNav">
-                        <i class="mdi mdi-account-group-outline"></i> <span>Mobilizers</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="mobilizersNav">
-                        <ul class="nav nav-sm flex-column">
-                            {{-- @can('canManageMobilizers') --}}
-                            <li class="nav-item">
-                                <a href="{{ route('mobilizers.create') }}" class="nav-link">Add Mobilizer</a>
-                            </li>
-                            {{-- @endcan --}}
-                            {{-- @canany(['canViewMobilizers', 'canManageMobilizers']) --}}
-                            <li class="nav-item">
-                                <a href="{{ route('mobilizers.index') }}" class="nav-link">All Mobilizers</a>
-                            </li>
-                            @foreach($mobilizerRoles as $role)
-                            <li class="nav-item">
-                                <a href="{{ route('mobilizers.dashboard.role', $role->id) }}" class="nav-link">{{ $role->name }} Dashboard</a>
-                            </li>
-                            @endforeach
-                            {{-- @endcan --}}
-                            @can('isMobilizer')
-                            <li class="nav-item">
-                                <a href="{{ route('mobilizers.index') }}" class="nav-link">My List</a>
-                            </li>
-                            @endcan
-                        </ul>
-                    </div>
-                </li>
+              
                 {{-- @endcanany --}}
                 {{-- Dashboard --}}
                 @can('add_poll')

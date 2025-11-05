@@ -398,7 +398,7 @@
 
                     <div class="row g-3">
                         <div class="col-md-4">
-                            <button type="submit" class="btn btn-info btn-md w-100">Update</button>
+                            {{-- <button type="submit" class="btn btn-info btn-md w-100">Update</button> --}}
                         </div>
                     </div>
                 </div>
@@ -496,8 +496,8 @@
                             @foreach($poll->questions as $poll_question)
                                 <th>{{$poll_question->question}}</th>
                             @endforeach
-                            {{-- <th>Follow Up Date</th>
-                            <th>Comments</th> --}}
+                            {{-- <th>Follow Up Date</th>--}}
+                            <th>Comments</th> 
                             <th>Agent</th>
                         </tr>
                     </thead>
@@ -612,10 +612,10 @@
                                 @endforeach 
                                 {{-- <td>
                                     {{$followUpDate ?? 'No Follow Up Date'}}
-                                </td>
+                                </td>--}}
                                 <td>
                                     {{$comment ?? 'No Comment'}}
-                                </td> --}}
+                                </td> 
                                 <td>
                                     {{$user->CalledBy->first_name }}
                                 </td>
@@ -710,14 +710,14 @@
                             <label for="exampleInputdate" class="form-label">Follow Up Date</label>
                             <input style="z-index: 1001;" type="date" name="followUpDate"  class="form-control" id="exampleInputdate">
                             
-                        </div>
+                        </div> --}}
                         <div class="mb-3">
                             <label for="cpmments" class="form-label">Comments</label>
                             <textarea name="comment" class="form-control" id="cpmments" rows="3" placeholder="Enter description" ></textarea>
                             <div class="invalid-feedback">
                                 Please add a comment.
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" id="close-modal"
