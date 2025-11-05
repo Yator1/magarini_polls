@@ -57,8 +57,9 @@ public function create()
 
          // ✅ Check if this agent already has an assigned participant not completed
         $existingUser = MalavaParticipant::where('called_by', auth()->id())
-            ->where('call_status', 1) // 1 = assigned but not yet updated
-            ->first();
+            ->where('call_status', 0) // 1 = assigned but not yet updated
+            ->get();
+            // dd($existingUser, auth()->id());
 
         if ($existingUser) {
             $user = $existingUser;
