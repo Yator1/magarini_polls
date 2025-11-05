@@ -1,0 +1,39 @@
+node_modules
+/vendor/
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Laravel 4 specific
+bootstrap/compiled.php
+app/storage/
+bootstrap/cache/
+
+# Laravel 5 & Lumen specific
+public/storage
+public/hot
+public/documents
+
+#ignore documents folder
+/public/documents
+
+
+# Laravel 5 & Lumen specific with changed public path
+public_html/storage
+public_html/hot
+
+storage/*.key
+Homestead.yaml
+Homestead.json
+/.vagrant
+.phpunit.result.cache
+/storage
+
+.env
+.idea
+storage/framework/views
+storage/
+
+
+
+Polls_System/
