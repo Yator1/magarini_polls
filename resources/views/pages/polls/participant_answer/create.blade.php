@@ -659,7 +659,7 @@
                             </label>
                     
                             @if($poll_question->answers->count() > 0)
-                                <select class="form-select parent-answer" name="question_{{ $poll_question->id }}" id="question_{{$loop->iteration}}" data-question-id="{{ $poll_question->id }}" aria-label="Default select example" >
+                                <select class="form-select parent-answer" name="question_{{ $poll_question->id }}" id="question_{{$loop->iteration}}" data-question-id="{{ $poll_question->id }}" aria-label="Default select example" required >
                                     <option value="">Select Decision</option>
                                     @foreach($poll_answers as $poll_answer)
                                         @if($poll_answer->poll_question_id == $poll_question->id)

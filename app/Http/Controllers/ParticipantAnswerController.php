@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ParticipantAnswer;
 use App\Models\Poll;
 use App\Models\PollAnswer;
+use Illuminate\Support\Facades\Validator;
 use App\Models\PollQuestion;
 use App\Models\PollingStation;
 use App\Models\User;
@@ -217,6 +218,23 @@ public function create()
     public function store(Request $request)
     {
         // dd($request->all());
+
+
+
+            //     // Validate the input data
+            //         $validator = Validator::make($request->all(), [
+            //             'question_1' => 'required',
+            //         ]);
+        
+
+            // // If validation fails, return back with errors and input
+            // if ($validator->fails()) {
+            //     // dd($request->all(), 'fail', $validator->messages());
+            //     return back()
+            //         ->withErrors($validator)
+            //         ->withInput();
+            // }
+            
         try {
             DB::beginTransaction();
         

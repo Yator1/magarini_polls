@@ -106,7 +106,14 @@ Route::match (['get', 'post'], 'user.agents', [UserController::class, 'agents'])
 
 
 Route::get('user.all', [App\Http\Controllers\UserController::class, 'all'])->name('users.all');
-Route::match (['get', 'post'], 'users.all2', [UserController::class, 'all2'])->name('users.all2');
+Route::match (['get', 'post'], 'users.all2', [UserController::class, 'contacts'])->name('users.all2');
+// Web route for the page UI
+Route::get('contacts', [UserController::class, 'contacts'])->name('contacts.page');
+
+// Server-side AJAX route
+Route::post('contacts/data', [UserController::class, 'contactsData'])->name('contacts.data');
+
+
 
 Route::get('user.agentCalls/{id}', [App\Http\Controllers\UserController::class, 'agentCalls'])->name('user.agentCalls');
 Route::get('user.agentCallsPicked/{id}', [App\Http\Controllers\UserController::class, 'agentCallsPicked'])->name('user.agentCallsPicked');

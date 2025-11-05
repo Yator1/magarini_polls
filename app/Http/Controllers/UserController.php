@@ -1021,6 +1021,65 @@ public function update_participant(Request $request)
     }
 }
 
+public function contacts(Request $request)
+{
+    $poll = Poll::find(3);
+    $agents = User::where('role_id', 6)->get();
+
+    return view('pages.polls.reports.contacts_new', [
+        'poll' => $poll,
+        'agents' => $agents,
+        'pagename' => 'All Contacts'
+    ]);
+}
+
+
+public function contactsData(Request $request)
+{
+    $query = MalavaParticipant::select(
+        'id','first_name','middle_name','last_name',
+        'phone_no','phone_no_2','phone_no_3','phone_no_4',
+        'email','address','call_status','called_by'
+    )->whereNotNull('phone_no')->where('phone_no', '!=', '');
+
+    if (!Gate::allows('is_admin')) {
+        $query->where('called_by', auth()->id());
+    }
+
+    if ($request->agent_id) {
+        $query->where('called_by', $request->agent_id);
+    }
+
+    if ($request->call_status !== null && $request->call_status !== '') {
+        $query->where('call_status', $request->call_status);
+    }
+
+    return datatables()->of($query)
+        ->addIndexColumn()
+        ->addColumn('name', fn($u)=>$u->first_name.' '.$u->middle_name.' '.$u->last_name)
+        ->addColumn('phones', function($u){
+            return collect([
+                $u->phone_no,
+                $u->phone_no_2,
+                $u->phone_no_3,
+                $u->phone_no_4
+            ])->filter()->implode('<br>');
+        })
+        ->addColumn('status', function($u){
+            return view('components.status-badge', compact('u'))->render();
+        })
+        ->addColumn('agent', function($u){
+            return optional($u->CalledBy)->first_name ?? '';
+        })
+        ->addColumn('action', function($u){
+            if($u->called_by == auth()->id() || Gate::allows('is_admin')){
+                return '<a href="'.route('participant-answers.addPoll2',$u->id).'" class="btn btn-secondary btn-sm">Edit</a>';
+            }
+            return '';
+        })
+        ->rawColumns(['phones','status','action'])
+        ->make(true);
+}
 
 
 
