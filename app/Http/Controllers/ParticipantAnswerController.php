@@ -46,7 +46,7 @@ public function create()
         $question_ids = $poll_questions->pluck('id')->toArray();
 
         $agents = User::whereIn('role_id', [6, 1])->get();
-        $counties = Counties::where('id', 37)->get();
+        $counties = Counties::where('id', 3)->get();
 
         $poll_answers = PollAnswer::where('poll_id', $poll->id)
             ->whereIn('poll_question_id', $question_ids)
@@ -75,7 +75,7 @@ public function create()
             $participant_ids = $participant_answers->pluck('participant_id')->toArray();
 
             $agents = User::whereIn('role_id', [6, 1])->get();
-            $counties = Counties::where('id', 37)->get();
+            $counties = Counties::where('id', 3)->get();
             $pollingStations = PollingStation::all();
 
             // ✅ Return the same participant, don't fetch new!
@@ -97,7 +97,7 @@ public function create()
         try {
             $user = MalavaParticipant::whereNotNull('phone_no')
                 ->where('phone_no', '!=', '')
-                ->where('sub_county_id', 201)
+                ->where('sub_county_id', 17)
                 ->whereNotIn('id', $participant_ids)
                 ->where(function ($q) {
                     $q->where(function ($q2) {
