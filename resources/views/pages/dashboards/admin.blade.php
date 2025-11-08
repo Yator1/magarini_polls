@@ -195,11 +195,11 @@
                                                                                 <td>{{ $ans['percentage'] }}%</td>
                                                                             </tr>
                                                                         @endforeach
-                                                                        <tr>
+                                                                        <!-- <tr>
                                                                             <td>Blanks</td>
                                                                             <td>{{ $qdata['blanks'] }}</td>
                                                                             <td>{{ $qdata['total_participants'] ? round($qdata['blanks'] / $qdata['total_participants'] * 100, 2) : 0 }}%</td>
-                                                                        </tr>
+                                                                        </tr> -->
                                                                     </tbody>
                                                                     <tfoot>
                                                                         <tr>
@@ -212,9 +212,9 @@
                                                             </div>
                                                             <div id="pieChart{{ $qid }}" class="apex-charts"></div>
                                                         @else
-                                                            <p>{{ $qdata['answer_type'] === 'text' ? 'Count' : 'Sum' }}: {{ $qdata['answers'] }}</p>
+                                                            <!-- <p>{{ $qdata['answer_type'] === 'text' ? 'Count' : 'Sum' }}: {{ $qdata['answers'] }}</p>
                                                             <p>Blanks: {{ $qdata['blanks'] }}</p>
-                                                            <p>Total: {{ $qdata['answers'] + $qdata['blanks'] }}</p>
+                                                            <p>Total: {{ $qdata['answers'] + $qdata['blanks'] }}</p> -->
                                                         @endif
                                                     </div>
                                                 </div>
@@ -265,11 +265,11 @@
                                                                                         <td>{{ $ans['percentage'] }}%</td>
                                                                                     </tr>
                                                                                 @endforeach
-                                                                                <tr>
+                                                                                <!-- <tr>
                                                                                     <td>Blanks</td>
                                                                                     <td>{{ $scBlank }}</td>
                                                                                     <td>{{ $scTotal ? round($scBlank / $scTotal * 100, 2) : 0 }}%</td>
-                                                                                </tr>
+                                                                                </tr> -->
                                                                             </tbody>
                                                                             <tfoot>
                                                                                 <tr>
@@ -285,8 +285,8 @@
                                                                         @endphp
                                                                         <p>Total in Subcounty: {{ $scTotal }}</p>
                                                                         <p>{{ $qdata['answer_type'] === 'text' ? 'Count' : 'Sum' }}: {{ $scData['value'] ?? 0 }}</p>
-                                                                        <p>Blanks: {{ $scData['blanks'] ?? 0 }}</p>
-                                                                        <p>Total: {{ ($scData['value'] ?? 0) + ($scData['blanks'] ?? 0) }}</p>
+                                                                        <!-- <p>Blanks: {{ $scData['blanks'] ?? 0 }}</p>
+                                                                        <p>Total: {{ ($scData['value'] ?? 0) + ($scData['blanks'] ?? 0) }}</p> -->
                                                                     @endif
                                                                 </div>
                                                             @endforeach
@@ -309,12 +309,12 @@
                                                                             @foreach($qdata['answers'] as $ans)
                                                                                 <th>{{ $ans['answer'] }} (Count / %)</th>
                                                                             @endforeach
-                                                                            <th>Blanks (Count / %)</th>
-                                                                            <th>Total</th>
+                                                                            <!-- <th>Blanks (Count / %)</th>
+                                                                            <th>Total</th> -->
                                                                         @else
-                                                                            <th>{{ $qdata['answer_type'] === 'text' ? 'Count' : 'Sum' }}</th>
+                                                                            <!-- <th>{{ $qdata['answer_type'] === 'text' ? 'Count' : 'Sum' }}</th>
                                                                             <th>Blanks</th>
-                                                                            <th>Total</th>
+                                                                            <th>Total</th> -->
                                                                         @endif
                                                                     </tr>
                                                                 </thead>
@@ -357,7 +357,7 @@
                                                                                     $rowTotal = $value + $blanks;
                                                                                 @endphp
                                                                                 <td>{{ $value }}</td>
-                                                                                <td>{{ $blanks }}</td>
+                                                                                <!-- <td>{{ $blanks }}</td> -->
                                                                                 <td>{{ $rowTotal }}</td>
                                                                             @endif
                                                                         </tr>
@@ -392,12 +392,12 @@
                                                                             @foreach($qdata['answers'] as $ans)
                                                                                 <th>{{ $ans['answer'] }} (Count / %)</th>
                                                                             @endforeach
-                                                                            <th>Blanks (Count / %)</th>
-                                                                            <th>Total</th>
+                                                                            <!-- <th>Blanks (Count / %)</th>
+                                                                            <th>Total</th> -->
                                                                         @else
-                                                                            <th>{{ $qdata['answer_type'] === 'text' ? 'Count' : 'Sum' }}</th>
+                                                                            <!-- <th>{{ $qdata['answer_type'] === 'text' ? 'Count' : 'Sum' }}</th>
                                                                             <th>Blanks</th>
-                                                                            <th>Total</th>
+                                                                            <th>Total</th> -->
                                                                         @endif
                                                                     </tr>
                                                                 </thead>
@@ -440,7 +440,7 @@
                                                                                     $rowTotal = $value + $blanks;
                                                                                 @endphp
                                                                                 <td>{{ $value }}</td>
-                                                                                <td>{{ $blanks }}</td>
+                                                                                <!-- <td>{{ $blanks }}</td> -->
                                                                                 <td>{{ $rowTotal }}</td>
                                                                             @endif
                                                                         </tr>
@@ -627,7 +627,7 @@
                 var pieOptions{{ $qid }} = {
                     series: [@foreach($qdata['answers'] as $ans) {{ $ans['count'] }}, @endforeach {{ $qdata['blanks'] }}],
                     chart: { height: 300, type: 'pie' },
-                    labels: [@foreach($qdata['answers'] as $ans) '{{ $ans['answer'] }}', @endforeach 'Blanks'],
+                    labels: [@foreach($qdata['answers'] as $ans) '{{ $ans['answer'] }}', @endforeach],
                     colors: ['#28a745', '#ffc107', '#dc3545', '#17a2b8', '#007bff'],
                     legend: { position: 'bottom' }
                 };
