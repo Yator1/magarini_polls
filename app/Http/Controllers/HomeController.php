@@ -187,7 +187,7 @@ class HomeController extends Controller
                             // ->where('user_type', 'participants')
                             whereNotNull('phone_no')
                             ->where('phone_no', '!=', '')
-                            ->where('sub_county_id', 201)
+                            ->where('sub_county_id', 17)
                             ->min('updated_at') ?? Carbon::today()->startOfDay();
                     });
             $date1 = Carbon::parse($defaultDate)->startOfDay();
@@ -203,7 +203,7 @@ class HomeController extends Controller
             // ->where('user_type', 'participants')
             ->whereNotNull('phone_no')
             ->where('phone_no', '!=', '')
-            ->where('sub_county_id', 201)
+            ->where('sub_county_id', 17)
             ->whereBetween('updated_at', [$date1, $date2]);
 
         if (!$isAdmin) {
@@ -224,7 +224,7 @@ class HomeController extends Controller
                 ->where('call_status', 0)
                 ->whereNotNull('phone_no')
                 ->where('phone_no', '!=', '')
-                ->where('sub_county_id', 201)
+                ->where('sub_county_id', 17)
                 ->count(),
         ];
 
@@ -257,7 +257,7 @@ class HomeController extends Controller
             ->where('call_status', 1)
             ->whereBetween('updated_at', [$date1, $date2])
             ->whereHas('participantAnswers')
-            ->where('sub_county_id', 201);
+            ->where('sub_county_id', 17);
 
         if (!$isAdmin) {
             $participatingQuery->where('called_by', $user->id);
@@ -273,7 +273,7 @@ class HomeController extends Controller
             // ->where('user_type', 'participants')
             ->where('call_status', '!=', 0)
             ->whereBetween('updated_at', [$date1, $date2])
-            ->where('sub_county_id', 201);
+            ->where('sub_county_id', 17);
 
         if (!$isAdmin) {
             $allcontactedUsers->where('called_by', $user->id);
@@ -363,31 +363,31 @@ class HomeController extends Controller
 
             // Per level data
             if ($question->question_type === 'multiple') {
-                $subQuery = ParticipantAnswer::join('malava_participants', 'participants_answers.participant_id', '=', 'malava_participants.id')
+                $subQuery = ParticipantAnswer::join('magarini_participants', 'participants_answers.participant_id', '=', 'magarini_participants.id')
                     ->where('poll_question_id', $qid)
                     ->whereIn('participants_answers.participant_id', $participatingIds)
-                    ->groupBy('malava_participants.sub_county_id', 'answer_id')
-                    ->select('malava_participants.sub_county_id', 'answer_id', DB::raw('count(*) as count'))
+                    ->groupBy('magarini_participants.sub_county_id', 'answer_id')
+                    ->select('magarini_participants.sub_county_id', 'answer_id', DB::raw('count(*) as count'))
                     ->get();
                 $perSubcountyData[$qid] = $subQuery->groupBy('sub_county_id')->map(function ($group) {
                     return $group->pluck('count', 'answer_id');
                 });
 
-                $wardQuery = ParticipantAnswer::join('malava_participants', 'participants_answers.participant_id', '=', 'malava_participants.id')
+                $wardQuery = ParticipantAnswer::join('magarini_participants', 'participants_answers.participant_id', '=', 'magarini_participants.id')
                     ->where('poll_question_id', $qid)
                     ->whereIn('participants_answers.participant_id', $participatingIds)
-                    ->groupBy('malava_participants.ward_id', 'answer_id')
-                    ->select('malava_participants.ward_id', 'answer_id', DB::raw('count(*) as count'))
+                    ->groupBy('magarini_participants.ward_id', 'answer_id')
+                    ->select('magarini_participants.ward_id', 'answer_id', DB::raw('count(*) as count'))
                     ->get();
                 $perWardData[$qid] = $wardQuery->groupBy('ward_id')->map(function ($group) {
                     return $group->pluck('count', 'answer_id');
                 });
 
-                $pollingQuery = ParticipantAnswer::join('malava_participants', 'participants_answers.participant_id', '=', 'malava_participants.id')
+                $pollingQuery = ParticipantAnswer::join('magarini_participants', 'participants_answers.participant_id', '=', 'magarini_participants.id')
                     ->where('poll_question_id', $qid)
                     ->whereIn('participants_answers.participant_id', $participatingIds)
-                    ->groupBy('malava_participants.pstation_code', 'answer_id')
-                    ->select('malava_participants.pstation_code', 'answer_id', DB::raw('count(*) as count'))
+                    ->groupBy('magarini_participants.pstation_code', 'answer_id')
+                    ->select('magarini_participants.pstation_code', 'answer_id', DB::raw('count(*) as count'))
                     ->get();
                 $perPollingData[$qid] = $pollingQuery->groupBy('pstation_code')->map(function ($group) {
                     return $group->pluck('count', 'answer_id');
@@ -397,31 +397,31 @@ class HomeController extends Controller
                     ? 'COUNT(CASE WHEN participant_answers.answer IS NOT NULL THEN 1 END) as value'
                     : 'SUM(CAST(participant_answers.answer AS DECIMAL)) as value';
 
-                $subQuery = ParticipantAnswer::join('malava_participants', 'participants_answers.participant_id', '=', 'malava_participants.id')
+                $subQuery = ParticipantAnswer::join('magarini_participants', 'participants_answers.participant_id', '=', 'magarini_participants.id')
                     ->where('poll_question_id', $qid)
                     ->whereIn('participants_answers.participant_id', $participatingIds)
-                    ->groupBy('malava_participants.sub_county_id')
-                    ->select('malava_participants.sub_county_id', DB::raw($valueExpr), DB::raw('COUNT(CASE WHEN participant_answers.answer IS NULL THEN 1 END) as blanks'))
+                    ->groupBy('magarini_participants.sub_county_id')
+                    ->select('magarini_participants.sub_county_id', DB::raw($valueExpr), DB::raw('COUNT(CASE WHEN participant_answers.answer IS NULL THEN 1 END) as blanks'))
                     ->get();
                 $perSubcountyData[$qid] = $subQuery->keyBy('sub_county_id')->map(function ($row) {
                     return ['value' => $row->value, 'blanks' => $row->blanks];
                 });
 
-                $wardQuery = ParticipantAnswer::join('malava_participants', 'participants_answers.participant_id', '=', 'malava_participants.id')
+                $wardQuery = ParticipantAnswer::join('magarini_participants', 'participants_answers.participant_id', '=', 'magarini_participants.id')
                     ->where('poll_question_id', $qid)
                     ->whereIn('participants_answers.participant_id', $participatingIds)
-                    ->groupBy('malava_participants.ward_id')
-                    ->select('malava_participants.ward_id', DB::raw($valueExpr), DB::raw('COUNT(CASE WHEN participant_answers.answer IS NULL THEN 1 END) as blanks'))
+                    ->groupBy('magarini_participants.ward_id')
+                    ->select('magarini_participants.ward_id', DB::raw($valueExpr), DB::raw('COUNT(CASE WHEN participant_answers.answer IS NULL THEN 1 END) as blanks'))
                     ->get();
                 $perWardData[$qid] = $wardQuery->keyBy('ward_id')->map(function ($row) {
                     return ['value' => $row->value, 'blanks' => $row->blanks];
                 });
 
-                $pollingQuery = ParticipantAnswer::join('malava_participants', 'participants_answers.participant_id', '=', 'malava_participants.id')
+                $pollingQuery = ParticipantAnswer::join('magarini_participants', 'participants_answers.participant_id', '=', 'magarini_participants.id')
                     ->where('poll_question_id', $qid)
                     ->whereIn('participants_answers.participant_id', $participatingIds)
-                    ->groupBy('malava_participants.pstation_code')
-                    ->select('malava_participants.pstation_code', DB::raw($valueExpr), DB::raw('COUNT(CASE WHEN participant_answers.answer IS NULL THEN 1 END) as blanks'))
+                    ->groupBy('magarini_participants.pstation_code')
+                    ->select('magarini_participants.pstation_code', DB::raw($valueExpr), DB::raw('COUNT(CASE WHEN participant_answers.answer IS NULL THEN 1 END) as blanks'))
                     ->get();
                 $perPollingData[$qid] = $pollingQuery->keyBy('pstation_code')->map(function ($row) {
                     return ['value' => $row->value, 'blanks' => $row->blanks];
