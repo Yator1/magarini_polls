@@ -175,8 +175,8 @@ class HomeController extends Controller
         $isAdmin = in_array($user->role_id, [1, 2]);
 
         // Fetch data, filtered for Mbeere North (subcounty_id 201)
-        $subcounties = SubCounty::where('county_id', 37)->where('id', 201)->get();
-        $wards = Ward::where('county_id', 37)->where('subcounty_id', 201)->get();
+        $subcounties = SubCounty::where('county_id', 3)->where('id', 17)->get();
+        $wards = Ward::where('county_id', 3)->where('subcounty_id', 17)->get();
         $pollingStations = PollingStation::get();
 
         // Date range
@@ -450,13 +450,34 @@ class HomeController extends Controller
             $agentStats = collect($agentStats)->sortByDesc('picked_participated')->toArray();
         }
 
-        return view('pages.dashboards.admin', compact(
-            'user', 'subcounties', 'wards', 'pollingStations','totalParticipants',
-            'callStats', 'percentages', 'date1', 'date2', 'polls', 'poll',
-            'pollData', 'perSubcountyData', 'perWardData', 'perPollingData',
-            'subcountyTotals', 'wardTotals', 'pollingTotals','allcontactedUsers','totalAllcontactedUsers',
-            'agentStats', 'isAdmin', 'totalCalled', 'totalUsers'
-        ));
+        $data = [
+            'user' => $user,
+            'isAdmin' => $isAdmin,
+            'subcounties' => $subcounties,
+            'wards' => $wards,
+            'pollingStations' => $pollingStations,
+            'callStats' => $callStats,
+            'percentages' => $percentages,
+            'date1' => $date1,
+            'date2' => $date2,
+            'polls' => $polls,
+            'poll' => $poll,
+            'pollData' => $pollData,
+            'perSubcountyData' => $perSubcountyData,
+            'perWardData' => $perWardData,
+            'perPollingData' => $perPollingData,
+            'subcountyTotals' => $subcountyTotals,
+            'wardTotals' => $wardTotals,
+            'pollingTotals' => $pollingTotals,
+            'totalParticipants' => $totalParticipants,
+            'totalCalled' => $totalCalled,
+            'totalUsers' => $totalUsers,
+            'allcontactedUsers' => $allcontactedUsers,
+            'totalAllcontactedUsers' => $totalAllcontactedUsers,
+            'agentStats' => $agentStats,
+        ];
+
+        return view('pages.dashboards.admin', $data);
     }
     public function adminDashboard2(Request $request)
     {

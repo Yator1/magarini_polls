@@ -167,7 +167,7 @@
                                                 class="avatar-xs rounded-circle" />
                                             </div> --}}
                                                 <div class="flex-grow-1 ms-3">
-                                                    <h5 class="fs-13">Rejected by: {{$application->assessor->fname ?? 'No Assessor Assigned', $application->assessor->lname?? 'No Assessor Assigned'}} <small class="text-muted ms-2">{{$application->rejection_date}}</small></h5>
+                                                    <h5 class="fs-13">Rejected by: {{ trim(optional($application->assessor)->fname . ' ' . optional($application->assessor)->lname) ?: 'No Assessor Assigned' }} <small class="text-muted ms-2">{{$application->rejection_date}}</small></h5>
                                                     <p class="text-muted">Rejection Reason : {{$application->rejection_reason?? 'No Rejection Reason'}}</p>
 
                                                     <div class="d-flex mt-4">
@@ -177,7 +177,7 @@
                                                         class="avatar-xs rounded-circle" />
                                                     </div> --}}
                                                         <div class="flex-grow-1 ms-3">
-                                                            <h5 class="fs-13">Appealed by {{$application->owner->fname , $application->owner->lname}} <small class="text-muted ms-2">Appeal Date : {{$application->updated_at}}</small></h5>
+                                                            <h5 class="fs-13">Appealed by {{ trim(optional($application->owner)->fname . ' ' . optional($application->owner)->lname) ?: 'No Owner Assigned' }} <small class="text-muted ms-2">Appeal Date : {{$application->updated_at}}</small></h5>
                                                             <p class="text-muted">Appeal Reason : {{$application->rejection_reason?? 'No Rejection Reason'}}.</p>
 
                                                         </div>

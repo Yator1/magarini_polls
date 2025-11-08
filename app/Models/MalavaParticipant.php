@@ -9,6 +9,8 @@ class MalavaParticipant extends Model
   
     protected $guarded = [];
 
+    protected $table = 'magarini_participants';
+
 
   
     public function role()
